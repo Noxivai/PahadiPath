@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Find your next Uttarakhand trek with PahadiPath: explore local trails, compare difficulty, and save routes for later."
+    />
+    <meta name="theme-color" content="#f6f5ef" />
+    <title>PahadiPath — Find your way into the mountains</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="trails.js" defer></script>
+    <script src="trail-store.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="PahadiPath home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <path d="M4 29.5 16.4 11l6.3 9.1 3.6-5.3L36 29.5H4Z" fill="currentColor" />
+            <path d="m12.4 17 4-6 4.2 6" stroke="#E9A64D" stroke-width="2.2" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span class="brand-name">pahadi<span>path</span></span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#discover">Explore trails</a>
+        <a class="nav-link" href="#about">The local way</a>
+        <a class="nav-link" href="admin.html">Admin panel</a>
+      </nav>
+
+      <button class="saved-nav-button" id="saved-toggle" type="button" aria-pressed="false">
+        <span aria-hidden="true">♡</span>
+        <span>Saved</span>
+        <span class="saved-count" id="saved-count">0</span>
+      </button>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> UTTARAKHAND, INDIA</p>
+          <h1 id="hero-title">Find your way<br />into the <em>mountains.</em></h1>
+          <p class="hero-description">
+            Local trails, honest advice, and a little more room to breathe. Find a trek that feels like yours.
+          </p>
+          <a class="button button-dark" href="#discover">
+            Find a trail <span aria-hidden="true">↗</span>
+          </a>
+          <div class="hero-note">
+            <span class="note-icon" aria-hidden="true">✳</span>
+            <span>Made for curious feet and mountain days.</span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img
+            src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&amp;fit=crop&amp;w=1400&amp;q=85"
+            alt="Layered Himalayan peaks rising above a green valley"
+            fetchpriority="high"
+          />
+          <div class="hero-image-shade"></div>
+          <div class="hero-photo-caption">
+            <span class="caption-line"></span>
+            <span>Somewhere on the old mountain road</span>
+          </div>
+          <div class="hero-coordinate">
+            <span>30° 19' N</span>
+            <span>79° 19' E</span>
+          </div>
+          <div class="hero-stamp" aria-label="Six trails to explore">
+            <span class="stamp-top">TAKE THE</span>
+            <span class="stamp-main">SCENIC<br />ROUTE</span>
+            <span class="stamp-bottom">Uttarakhand · Est. always</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="trail-section" id="discover" aria-labelledby="discover-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow section-eyebrow"><span class="eyebrow-dot"></span> YOUR NEXT GOOD DAY</p>
+            <h2 id="discover-title">Trails worth <em>taking slowly.</em></h2>
+          </div>
+          <p class="section-intro">
+            From first-timer friendly to “glad I trained for this.” Pick a path, check the details, and go at your own pace.
+          </p>
+        </div>
+
+        <div class="explorer-toolbar">
+          <label class="search-box">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <span class="sr-only">Search trails</span>
+            <input id="trail-search" type="search" placeholder="Search a trail or region..." autocomplete="off" />
+            <kbd>⌘ K</kbd>
+          </label>
+          <div class="sort-control">
+            <label for="trail-sort">Sort by</label>
+            <select id="trail-sort">
+              <option value="recommended">Recommended</option>
+              <option value="shortest">Shortest first</option>
+              <option value="longest">Longest first</option>
+              <option value="altitude">Highest altitude</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="filter-row">
+          <div class="difficulty-filters" role="group" aria-label="Filter by difficulty">
+            <button class="filter-chip active" type="button" data-difficulty="all" aria-pressed="true">All trails</button>
+            <button class="filter-chip" type="button" data-difficulty="Easy" aria-pressed="false">Easy</button>
+            <button class="filter-chip" type="button" data-difficulty="Moderate" aria-pressed="false">Moderate</button>
+            <button class="filter-chip" type="button" data-difficulty="Challenging" aria-pressed="false">Challenging</button>
+          </div>
+          <p class="result-count" id="result-count" aria-live="polite"></p>
+        </div>
+
+        <div class="trail-grid" id="trail-grid" aria-live="polite"></div>
+        <div class="empty-state" id="empty-state" hidden>
+          <span class="empty-icon" aria-hidden="true">⌁</span>
+          <h3>No trails found this way.</h3>
+          <p>Try a different search or clear the filters to see every trail.</p>
+          <button class="button button-outline" id="clear-filters" type="button">Clear filters</button>
+        </div>
+      </section>
+
+      <section class="local-note" id="about" aria-labelledby="local-note-title">
+        <div class="local-note-mark" aria-hidden="true">✳</div>
+        <div class="local-note-copy">
+          <p class="eyebrow">A GENTLER WAY TO GO</p>
+          <h2 id="local-note-title">The mountains aren't a checklist.</h2>
+          <p>
+            Go with a local guide, check conditions before you leave, and give the places you visit the same care you'd give home.
+            Trail details are a starting point—weather and route conditions can change.
+          </p>
+        </div>
+        <a class="text-link" href="#discover">Choose a trail <span aria-hidden="true">↗</span></a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand footer-brand" href="#" aria-label="PahadiPath home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <path d="M4 29.5 16.4 11l6.3 9.1 3.6-5.3L36 29.5H4Z" fill="currentColor" />
+            <path d="m12.4 17 4-6 4.2 6" stroke="#E9A64D" stroke-width="2.2" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span class="brand-name">pahadi<span>path</span></span>
+      </a>
+      <p>Made with care for the hills. <span>© <span id="current-year"></span> PahadiPath</span></p>
+      <a href="#discover">Back to the trails ↑</a>
+    </footer>
+
+    <dialog class="detail-dialog" id="trail-dialog" aria-labelledby="dialog-title">
+      <button class="dialog-close" id="dialog-close" type="button" aria-label="Close trail details">×</button>
+      <div id="dialog-content"></div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
